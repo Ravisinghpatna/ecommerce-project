@@ -829,3 +829,62 @@ h1 {
   opacity: 1;
 }
  
+ /*------shipment tracking-----*/
+ .ship-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.ship-row select {
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.ship-btn {
+  background: #1f2430;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.ship-btn:hover {
+  background: #4f46e5;
+}
+
+.tracking-details {
+  margin: 10px 0;
+}
+
+.tracking-toggle-btn {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.tracking-updates-list {
+  list-style: none;
+  padding: 10px 0 0 0;
+  margin: 8px 0 0 0;
+  border-left: 2px solid #eee;
+}
+
+.tracking-updates-list li {
+  padding: 4px 0 4px 14px;
+  font-size: 13px;
+  color: #555;
+}
+
+.tracking-update-time {
+  color: #999;
+  font-size: 11px;
+}

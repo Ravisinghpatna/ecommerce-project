@@ -8,6 +8,7 @@ export const updateOrderStatus = (orderId, status) => api.put(`/orders/${orderId
 export const getProfile = () => api.get('/customers/me');
 export const updateProfile = (name, phone) => api.put('/customers/me', { name, phone });
 export const cancelOrder = (orderId) => api.put(`/orders/${orderId}/cancel`);
+export const shipOrder = (orderId, courierPartner) => api.put(`/orders/${orderId}/ship`, { courierPartner });
 
 // Backend ka base URL. Saare API calls yahi se guzarte hain,
 // taaki agar port/URL badle to sirf ek jagah change karni pade.

@@ -29,33 +29,35 @@ function formatDate(dateStr) {
 }
  
 function StatusTimeline({ order }) {
+  const [showDetails, setShowDetails] = useState(false);
+
   if (order.status === 'CANCELLED') {
     return <p className="order-cancelled">❌ Order Cancelled</p>;
   }
- 
+
   const currentIndex = STEPS.findIndex((s) => s.key === order.status);
- 
+
+  // Har step ke liye uska actual date/time statusHistory se dhoondo
   const getStepDate = (stepKey) => {
     const entry = (order.statusHistory || []).find((h) => h.status === stepKey);
     return entry ? formatDate(entry.timestamp) : null;
   };
- 
+
   return (
     <div>
       {order.status !== 'DELIVERED' && order.estimatedDelivery && (
         <p className="arriving-by">
           📅 Arriving by <strong>{formatDate(order.estimatedDelivery)}</strong>
         </p>
-			)}
-			{order.trackingId && (
-		<p className="tracking-id">
-			📦 Tracking ID: <strong>{order.trackingId}</strong>
-		</p>
-	
-		
+      )}
+      {order.trackingId && (
+        <p className="tracking-id">
+          📦 {order.courierPartner && `${order.courierPartner.replace('_', ' ')} — `}
+          Tracking ID: <strong>{order.trackingId}</strong>
+        </p>
       )}
       <p className="current-status-message">{CURRENT_STATUS_MESSAGE[order.status]}</p>
- 
+
       <div className="status-timeline">
         {STEPS.map((step, index) => (
           <React.Fragment key={step.key}>
@@ -72,6 +74,24 @@ function StatusTimeline({ order }) {
           </React.Fragment>
         ))}
       </div>
+
+      {/* Courier ke detailed, real-tracking-page-jaisa messages — har ghante naye aate rehte hain */}
+      {order.trackingUpdates && order.trackingUpdates.length > 0 && (
+        <div className="tracking-details">
+          <button className="tracking-toggle-btn" onClick={() => setShowDetails(!showDetails)}>
+            {showDetails ? 'Hide' : 'Show'} tracking details ({order.trackingUpdates.length})
+          </button>
+          {showDetails && (
+            <ul className="tracking-updates-list">
+              {[...order.trackingUpdates].reverse().map((u) => (
+                <li key={u.id}>
+                  <span className="tracking-update-time">{formatDate(u.timestamp)}</span> — {u.message}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
   );
 }
